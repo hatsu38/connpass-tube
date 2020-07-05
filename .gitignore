@@ -2,6 +2,10 @@ node_modules/
 
 .next/
 
+# Firebase Deploy Directory
+out/
+.firebase
+
 # Logs
 npm-debug.log*
 yarn-debug.log*
