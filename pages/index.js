@@ -8,7 +8,7 @@ import { Nav, Card } from 'react-bootstrap';
 import axios from 'axios'
 
 const REQUEST_API_BASE_URL = "https://connpass-tube-api.herokuapp.com/api/v1/events"
-const DEFALT_RANGE = "recent"
+const DEFAULT_RANGE = "recent"
 export default class Index extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +17,6 @@ export default class Index extends Component {
       range: 'recent',
       totalEventsCount: 0
     }
-    this.fetchEvents = this.fetchEvents.bind(this)
     this.handleSelect = this.handleSelect.bind(this)
   }
 
@@ -26,16 +25,13 @@ export default class Index extends Component {
   }
 
   handleSelect = (eventKey) =>  {
-    console.log("eventKey", eventKey);
     this.setState({range: eventKey})
     this.fetchEvents(eventKey)
   }
 
-  async fetchEvents(range = DEFALT_RANGE) {
-    console.log(`${REQUEST_API_BASE_URL}?range=${range}`)
+  async fetchEvents(range = DEFAULT_RANGE) {
     const apiResponse = await axios.get(`${REQUEST_API_BASE_URL}?range=${range}`)
     if(!apiResponse || !apiResponse.data) { return null }
-
 
     const eventData = apiResponse.data
     this.setState({events: eventData.events})
