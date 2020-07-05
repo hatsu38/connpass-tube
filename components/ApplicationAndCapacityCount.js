@@ -27,5 +27,5 @@ export default class ApplicationAndCapacityCount extends Component {
 }
 
 ApplicationAndCapacityCount.propTypes = {
-  event: PropTypes.func.isRequired,
+  event: PropTypes.object.isRequired,
 };
