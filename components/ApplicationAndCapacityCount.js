@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUsers } from '@fortawesome/free-solid-svg-icons'
@@ -18,7 +18,7 @@ export default class ApplicationAndCapacityCount extends Component {
     const applicantColor = this.isCapacityCountOver(event) ? 'text--color-red' : null
     return(
       <>
-        <FontAwesomeIcon　icon={faUsers} className="icon--margin" />
+        <FontAwesomeIcon icon={faUsers} className="icon--margin" />
         <span className={applicantColor}>{event.applicant}人</span>
         { 0 < event.limit && <span>/定員:{event.limit}人</span> }
       </>
@@ -27,5 +27,5 @@ export default class ApplicationAndCapacityCount extends Component {
 }
 
 ApplicationAndCapacityCount.propTypes = {
-  event: PropTypes.object.isRequired,
+  event: PropTypes.object.isRequired
 };
