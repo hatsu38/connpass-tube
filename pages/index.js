@@ -79,19 +79,13 @@ export default class Index extends Component {
           </Card>
           <Nav fill variant="tabs" defaultActiveKey={range} onSelect={this.handleSelect}>
             <Nav.Item>
-              <Nav.Link eventKey="recent">
-                最近
-              </Nav.Link>
+              <Nav.Link eventKey="recent">最近</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="monthly">
-                月
-              </Nav.Link>
+              <Nav.Link eventKey="monthly">月</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="all">
-                すべて
-              </Nav.Link>
+              <Nav.Link eventKey="all">すべて</Nav.Link>
             </Nav.Item>
           </Nav>
           {events &&
