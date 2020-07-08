@@ -3,7 +3,7 @@ import Layout from '../components/Layout'
 
 import {withRouter} from 'next/router'
 
-import { Card } from 'react-bootstrap';
+import { Card, Link } from 'react-bootstrap';
 
 import axios from 'axios'
 
@@ -49,22 +49,26 @@ class Event extends Component {
   }
 
   renderDetailCard(){
+    const event = this.state.event
     return(
       <Card>
         <Card.Img variant="top" src="https://s3.ap-northeast-1.amazonaws.com/s3.techplay.jp/tp-images/event/586318a441ee3cec55576ba8ed067bdf7b60a42c.png" />
         <Card.Body>
           <Card.Text>
-            {this.state.event.title}
+            {event.title}
           </Card.Text>
           <Card.Text className="text--light">
             <HoldingDateTime
-              startDateTime={this.state.event.started_at}
-              endDateTime={this.state.event.ended_at}
+              startDateTime={event.started_at}
+              endDateTime={event.ended_at}
             />
           </Card.Text>
           <Card.Text className="text--light">
-            <ApplicationAndCapacityCount event={this.state.event} />
+            <ApplicationAndCapacityCount event={event} />
           </Card.Text>
+          <a href={event.connpass_event_url}>hoge</a>
+          <div dangerouslySetInnerHTML={{__html : event.catch }} />
+          {/* <div dangerouslySetInnerHTML={{__html : event.description }} /> */}
         </Card.Body>
       </Card>
     )

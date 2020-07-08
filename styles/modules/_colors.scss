@@ -121,3 +121,120 @@ $hn_color : #deadbe;
 .adjust_hue_302 {
 	color: adjust_hue($hn_color, 302);
 }
+
+.bg--lighten_1 {
+	background-color: lighten($ref, 20);
+}
+
+.bg--lighten_2 {
+	background-color: lighten($ref, 50);
+}
+
+.bg--lighten_3 {
+	background-color: lighten($ref, 100);
+}
+
+.bg--lighten_4 {
+	background-color: lighten($ref, 0);
+}
+
+.bg--lighten_red_1 {
+	background-color: lighten(#ff0000, 20);
+}
+
+// Darken
+
+.bg--darken_1 {
+	background-color: darken($ref, 20);
+}
+
+.bg--darken_2 {
+	background-color: darken($ref, 30);
+}
+
+// darken_3 : 200% is out of bounds for SASS;
+
+.bg--darken_4 {
+	background-color: darken($ref, 0);
+}
+
+// Adjust Hues
+
+.bg--adjust_hue_1 {
+	background-color: adjust_hue($ref, 10);
+}
+
+.bg--adjust_hue_2 {
+	background-color: adjust_hue($ref, 140);
+}
+
+.bg--adjust_hue_3 {
+	background-color: adjust_hue($ref, -220);
+}
+
+.bg--adjust_hue_4 {
+	background-color: adjust_hue($ref, 360);
+}
+
+.bg--adjust_hue_5 {
+	background-color: adjust_hue($ref, 540);
+}
+
+// Complete color stack
+
+.bg--func_stack_a {
+	background-color: adjust_hue(desaturate(lighten(#003399, 38), 31), 117);
+}
+
+.bg--func_stack_b {
+	background-color: adjust_hue(desaturate(lighten(#ff6600, 23), 68), 30);
+}
+
+.bg--func_stack_c {
+	background-color: adjust_hue(desaturate(lighten(#0183b7, 30), 34), 222);
+}
+
+.bg--hue {
+	background-color: hue($hn_color);
+}
+
+.bg--sat {
+	background-color: saturation($hn_color);
+}
+
+.bg--light {
+	background-color: lightness($hn_color);
+}
+
+.bg--hue_blue {
+	background-color: hue($ref);
+}
+
+.bg--sat_blue {
+	background-color: saturation($ref);
+}
+
+.bg--light_blue {
+	background-color: lightness($ref);
+}
+
+.bg--red {
+	background-color: red($hn_color);
+}
+
+.bg--rgb {
+	background-color: rgb(red($hn_color), green($hn_color), blue($hn_color));
+}
+
+.bg--darken_10 {
+	background-color: darken($hn_color, 10);
+}
+
+.bg--saturate_57 {
+	background-color: saturate($hn_color, 57);
+}
+
+.bg--adjust_hue_302 {
+	background-color: adjust_hue($hn_color, 302);
+}
+

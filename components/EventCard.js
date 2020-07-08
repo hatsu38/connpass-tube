@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import { Card } from 'react-bootstrap';
+import { Card, Badge } from 'react-bootstrap';
 import Link from 'next/link'
 
 import HoldingDateTime from '../components/HoldingDateTime'
@@ -13,7 +13,9 @@ export default class EventCard extends Component {
 
   render() {
     const event = this.props.event
+    const tags = event.tags
     if(!event) {return null}
+
     return (
       <>
         <Link href={`/event?id=${event.id}`} as={`/event/${event.id}`}>
@@ -30,6 +32,11 @@ export default class EventCard extends Component {
                 <ApplicationAndCapacityCount event={event} />
               </Card.Text>
             </Card.Body>
+            <div>
+              {tags && tags.map((tag) =>
+                <Badge key={tag.id} pill className="m-1 bg--darken_1" style={{color: 'white'}}>{tag.name}</Badge>
+              )}
+            </div>
           </Card>
         </Link>
       </>
