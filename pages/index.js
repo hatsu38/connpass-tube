@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 
 import Layout from '../components/Layout'
-import EventList from '../components/EventList'
+
+import EventCard from '../components/EventCard'
 
 import { Nav, Card } from 'react-bootstrap';
 
 import axios from 'axios'
+import InfiniteScroll from 'react-infinite-scroller';
 
 const REQUEST_API_BASE_URL = "https://connpass-tube-api.herokuapp.com/api/v1/events"
 const DEFAULT_RANGE = "recent"
@@ -67,7 +69,9 @@ export default class Index extends Component {
               </Nav.Link>
             </Nav.Item>
           </Nav>
-          <EventList events={this.state.events} />
+          {this.state.events.map((event) =>
+            <EventCard event={event} key={event.id} />
+          )}
         </Layout>
       </>
     )
