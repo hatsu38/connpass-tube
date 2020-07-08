@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
 import moment from 'moment';
+moment.locale("ja");
 
 export default class HoldingDateTime extends Component {
   constructor(props) {
@@ -15,11 +16,11 @@ export default class HoldingDateTime extends Component {
   }
 
   formatStringToTime(stringDateTime) {
-    return moment(stringDateTime).format('HH:MM')
+    return moment(stringDateTime).format('HH:mm')
   }
 
   formatStringToDateTime(stringDateTime) {
-    return moment(stringDateTime).format('YYYY年MM月DD日 HH:MM')
+    return moment(stringDateTime).format('YYYY年MM月DD日 HH:mm')
   }
 
   holdingTime(startDateTime, endDateTime) {
@@ -36,7 +37,7 @@ export default class HoldingDateTime extends Component {
   render() {
     return (
       <>
-        <FontAwesomeIcon icon={faCalendarAlt} className="icon--margin" />
+        <FontAwesomeIcon icon={faCalendarAlt} className="icon--margin darken_1" />
         { this.holdingTime(this.props.startDateTime, this.props.endDateTime) }
       </>
     )

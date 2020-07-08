@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 
 import Layout from '../components/Layout'
-import EventList from '../components/EventList'
+
+import EventCard from '../components/EventCard'
 
 import { Nav, Card } from 'react-bootstrap';
 
 import axios from 'axios'
+import InfiniteScroll from 'react-infinite-scroller';
 
 const REQUEST_API_BASE_URL = "https://connpass-tube-api.herokuapp.com/api/v1/events"
 const DEFAULT_RANGE = "recent"
@@ -15,7 +17,10 @@ export default class Index extends Component {
     this.state = {
       events: [],
       range: 'recent',
-      totalEventsCount: 0
+      totalEventsCount: 0,
+      page: 1,
+      hasMore: false,
+      loading: true
     }
     this.handleSelect = this.handleSelect.bind(this)
   }
@@ -26,19 +31,41 @@ export default class Index extends Component {
 
   handleSelect = (eventKey) =>  {
     this.setState({range: eventKey})
+    this.setState({page: 1})
+    this.setState({events: []})
     this.fetchEvents(eventKey)
   }
 
   async fetchEvents(range = DEFAULT_RANGE) {
-    const apiResponse = await axios.get(`${REQUEST_API_BASE_URL}?range=${range}`)
+    this.setState({loading: true})
+    const { events, page } = this.state
+    const apiResponse = await axios.get(`${REQUEST_API_BASE_URL}?range=${range}&page=${page}`)
     if(!apiResponse || !apiResponse.data) { return null }
 
     const eventData = apiResponse.data
-    this.setState({events: eventData.events})
+    const insertEvents = events.concat(eventData.events)
+
+    this.setState({events: insertEvents})
     this.setState({totalEventsCount: eventData.total_count})
-  };
+
+    this.updatePageAndHasMore()
+    this.setState({loading: false})
+  }
+
+  updatePageAndHasMore() {
+    const { events, totalEventsCount, page } = this.state
+    if(totalEventsCount > events.length){
+      const nextPage = page + 1
+      this.setState({hasMore: true})
+      this.setState({page: nextPage})
+    } else {
+      this.setState({hasMore: false})
+    }
+  }
 
   render() {
+    const { events, loading, hasMore, range, totalEventsCount, page } = this.state
+
     return (
       <>
         <Layout>
@@ -46,28 +73,33 @@ export default class Index extends Component {
             <Card.Body>
               <Card.Title className="f3 m-b-10">人気ランキング</Card.Title>
               <div className="eventCount">
-                <strong>{this.state.totalEventsCount}</strong>件のイベント
+                <strong>{totalEventsCount}</strong>件のイベント
               </div>
             </Card.Body>
           </Card>
-          <Nav fill variant="tabs" defaultActiveKey={this.state.range} onSelect={this.handleSelect}>
+          <Nav fill variant="tabs" defaultActiveKey={range} onSelect={this.handleSelect}>
             <Nav.Item>
-              <Nav.Link eventKey="recent">
-                最近
-              </Nav.Link>
+              <Nav.Link eventKey="recent">最近</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="monthly">
-                月
-              </Nav.Link>
+              <Nav.Link eventKey="monthly">月</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="all">
-                すべて
-              </Nav.Link>
+              <Nav.Link eventKey="all">すべて</Nav.Link>
             </Nav.Item>
           </Nav>
-          <EventList events={this.state.events} />
+          {events &&
+            <InfiniteScroll
+              loadMore={() => { if (!loading) { this.fetchEvents() } }}
+              hasMore={hasMore}
+              pageStart={page}
+              loader={<div className="loader" key="order-loader" />}
+            >
+              {events.map((event) =>
+                <EventCard event={event} key={event.id} />
+              )}
+            </InfiniteScroll>
+          }
         </Layout>
       </>
     )
