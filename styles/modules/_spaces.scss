@@ -1,0 +1,49 @@
+$sm: 1rem;
+$md: 1.7rem;
+$lg: 2.8rem;
+
+.padding-sm {
+  padding: $sm;
+}
+
+.padding-md {
+  padding: $md;
+}
+
+.padding-lg {
+  padding: $lg;
+}
+
+.margin-sm {
+  margin: $sm;
+}
+
+.margin-md {
+  margin: $md;
+}
+
+.margin-lg {
+  margin: $lg;
+}
+
+.marginless {
+  margin: 0 !important;
+}
+
+.paddingless {
+  padding: 0 !important;
+}
+
+$spaceamounts: (5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100); // Adjust this to include the pixel amounts you need.
+$sides: (top, bottom, left, right); // Leave this variable alone
+
+@each $space in $spaceamounts {
+  @each $side in $sides {
+    .m-#{str-slice($side, 0, 1)}-#{$space} {
+      margin-#{$side}: #{$space}px !important;
+    }
+    .p-#{str-slice($side, 0, 1)}-#{$space} {
+      padding-#{$side}: #{$space}px !important;
+    }
+  }
+}

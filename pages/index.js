@@ -44,7 +44,10 @@ export default class Index extends Component {
         <Layout>
           <Card className="text-center">
             <Card.Body>
-              <Card.Title>{this.state.totalEventsCount}件のイベント</Card.Title>
+              <Card.Title className="f3 m-b-10">人気ランキング</Card.Title>
+              <div className="eventCount">
+                <strong>{this.state.totalEventsCount}</strong>件のイベント
+              </div>
             </Card.Body>
           </Card>
           <Nav fill variant="tabs" defaultActiveKey={this.state.range} onSelect={this.handleSelect}>
