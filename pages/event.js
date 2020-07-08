@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import Layout from '../components/Layout'
-
+import Link from 'next/link'
 import {withRouter} from 'next/router'
 
 import { Card } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 
 import axios from 'axios'
 
@@ -49,21 +51,31 @@ class Event extends Component {
   }
 
   renderDetailCard(){
+    const event = this.state.event
     return(
       <Card>
-        <Card.Img variant="top" src="https://s3.ap-northeast-1.amazonaws.com/s3.techplay.jp/tp-images/event/586318a441ee3cec55576ba8ed067bdf7b60a42c.png" />
         <Card.Body>
           <Card.Text>
-            {this.state.event.title}
+            {event.title}
           </Card.Text>
           <Card.Text className="text--light">
             <HoldingDateTime
-              startDateTime={this.state.event.started_at}
-              endDateTime={this.state.event.ended_at}
+              startDateTime={event.started_at}
+              endDateTime={event.ended_at}
             />
           </Card.Text>
           <Card.Text className="text--light">
-            <ApplicationAndCapacityCount event={this.state.event} />
+            <ApplicationAndCapacityCount event={event} />
+          </Card.Text>
+          <Card.Text className="text--light">
+            <Link href={event.connpass_event_url} prefetch={false}>
+              <a target="_blank">
+                <FontAwesomeIcon icon={faExternalLinkAlt} className="icon--margin darken_1" />
+              </a>
+            </Link>
+            <Link href={event.connpass_event_url} prefetch={false}>
+              <a target="_blank">元のイベントページへ</a>
+            </Link>
           </Card.Text>
         </Card.Body>
       </Card>
@@ -76,8 +88,8 @@ class Event extends Component {
     return (
       <>
         <Layout>
-          {this.isNotEmpty(event) && this.renderDetailCard()}
-          {this.isNotEmpty(movies) && this.renderYouTube()}
+          {this.isNotEmpty(movies) ? this.renderYouTube() : null }
+          {this.isNotEmpty(event) ? this.renderDetailCard() : null }
         </Layout>
       </>
     )
