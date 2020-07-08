@@ -17,3 +17,9 @@
 2. cd connpass-tube
 3. npm run dev
 ```
+
+## Deploy
+```
+1. npm run export
+2. firebase deploy
+```
