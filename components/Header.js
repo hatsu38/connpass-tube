@@ -7,7 +7,7 @@ export default class Header extends Component {
     return (
       <>
         <Navbar bg="dark" variant="dark">
-          <Navbar.Brand href="#home">
+          <Navbar.Brand href="/">
             Connpass Tube
           </Navbar.Brand>
         </Navbar>

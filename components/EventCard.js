@@ -31,12 +31,12 @@ export default class EventCard extends Component {
               <Card.Text className="text--light">
                 <ApplicationAndCapacityCount event={event} />
               </Card.Text>
+              <div>
+                {tags && tags.map((tag) =>
+                  <Badge key={tag.id} pill className="m-r-5 bg--darken_1" style={{color: 'white'}}>{tag.name}</Badge>
+                )}
+              </div>
             </Card.Body>
-            <div>
-              {tags && tags.map((tag) =>
-                <Badge key={tag.id} pill className="m-1 bg--darken_1" style={{color: 'white'}}>{tag.name}</Badge>
-              )}
-            </div>
           </Card>
         </Link>
       </>
