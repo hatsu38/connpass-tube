@@ -38,8 +38,9 @@ export default class Index extends Component {
   async fetchEvents() {
     this.setState({isLoading: true})
     const { events, page, range } = this.state
-    const apiResponse = await axios.get(`${REQUEST_API_BASE_URL}?range=${range}&page=${page}`)
-    if(!apiResponse || !apiResponse.data) {
+    const apiResponse = await axios.get(`${REQUEST_API_BASE_URL}?range=${range}&page=${page}`).catch(null)
+
+    if(!apiResponse || !apiResponse.data || apiResponse.data.status === 500) {
       this.setState({hasMore: false})
       this.setState({isLoading: false})
       return true
