@@ -18,7 +18,7 @@ export default class YouTube extends Component {
   render() {
     return (
       <>
-        <div class="frame-wrapper__video">
+        <div className="frame-wrapper__video">
           <iframe width="640" height="360" src={this.formatEmbedYoutubeURL(this.props.movie.url)} />
         </div>
       </>

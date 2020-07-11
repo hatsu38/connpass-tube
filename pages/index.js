@@ -4,10 +4,9 @@ import Layout from '../components/Layout'
 
 import EventCard from '../components/EventCard'
 
-import { Nav, Card } from 'react-bootstrap';
+import { Nav, Card, Button } from 'react-bootstrap';
 
 import axios from 'axios'
-import InfiniteScroll from 'react-infinite-scroller';
 
 const REQUEST_API_BASE_URL = "https://connpass-tube-api.herokuapp.com/api/v1/events"
 const DEFAULT_RANGE = "recent"
@@ -20,12 +19,12 @@ export default class Index extends Component {
       totalEventsCount: 0,
       page: 1,
       hasMore: false,
-      loading: true
+      isLoading: false
     }
-    this.handleSelect = this.handleSelect.bind(this)
+    this.fetchEvents = this.fetchEvents.bind(this);
   }
 
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     this.fetchEvents()
   }
 
@@ -36,11 +35,15 @@ export default class Index extends Component {
     this.fetchEvents(eventKey)
   }
 
-  async fetchEvents(range = DEFAULT_RANGE) {
-    this.setState({loading: true})
-    const { events, page } = this.state
+  async fetchEvents() {
+    this.setState({isLoading: true})
+    const { events, page, range } = this.state
     const apiResponse = await axios.get(`${REQUEST_API_BASE_URL}?range=${range}&page=${page}`)
-    if(!apiResponse || !apiResponse.data) { return null }
+    if(!apiResponse || !apiResponse.data) {
+      this.setState({hasMore: false})
+      this.setState({isLoading: false})
+      return true
+    }
 
     const eventData = apiResponse.data
     const insertEvents = events.concat(eventData.events)
@@ -49,10 +52,10 @@ export default class Index extends Component {
     this.setState({totalEventsCount: eventData.total_count})
 
     this.updatePageAndHasMore()
-    this.setState({loading: false})
+    this.setState({isLoading: false})
   }
 
-  updatePageAndHasMore() {
+  updatePageAndHasMore = () => {
     const { events, totalEventsCount, page } = this.state
     if(totalEventsCount > events.length){
       const nextPage = page + 1
@@ -64,44 +67,47 @@ export default class Index extends Component {
   }
 
   render() {
-    const { events, loading, hasMore, range, totalEventsCount, page } = this.state
+    const { events, isLoading, hasMore, range, totalEventsCount, page } = this.state
 
     return (
-      <>
-        <Layout>
-          <Card className="text-center">
-            <Card.Body>
-              <Card.Title className="f3 m-b-10">人気ランキング</Card.Title>
-              <div className="eventCount">
-                <strong>{totalEventsCount}</strong>件のイベント
-              </div>
-            </Card.Body>
-          </Card>
-          <Nav fill variant="tabs" defaultActiveKey={range} onSelect={this.handleSelect}>
-            <Nav.Item>
-              <Nav.Link eventKey="recent">最近</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="monthly">月</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="all">すべて</Nav.Link>
-            </Nav.Item>
-          </Nav>
-          {events &&
-            <InfiniteScroll
-              loadMore={() => { if (!loading) { this.fetchEvents() } }}
-              hasMore={hasMore}
-              pageStart={page}
-              loader={<div className="loader" key="order-loader" />}
+      <Layout>
+        <Card className="text-center">
+          <Card.Body>
+            <Card.Title className="f3 m-b-10">人気ランキング</Card.Title>
+            <div className="eventCount">
+              <strong>{totalEventsCount}</strong>件のイベント
+            </div>
+          </Card.Body>
+        </Card>
+        <Nav fill variant="tabs" defaultActiveKey={range} onSelect={this.handleSelect}>
+          <Nav.Item>
+            <Nav.Link eventKey="recent">最近</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="monthly">月</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="all">すべて</Nav.Link>
+          </Nav.Item>
+        </Nav>
+        {events &&
+          events.map((event) =>
+            <EventCard event={event} key={event.id} />
+          )
+        }
+        {hasMore &&
+          <div className="moreReadButton">
+            <Button
+              block
+              variant="outline-secondary"
+              disabled={isLoading}
+              onClick={isLoading ? null : this.fetchEvents}
             >
-              {events.map((event) =>
-                <EventCard event={event} key={event.id} />
-              )}
-            </InfiniteScroll>
-          }
-        </Layout>
-      </>
+              {isLoading ? '読み込み中…' : 'もっと見る'}
+            </Button>
+          </div>
+        }
+      </Layout>
     )
   }
 }
