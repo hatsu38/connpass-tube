@@ -52,7 +52,8 @@ export default class RankingEvent extends Component {
   async fetchEvents() {
     this.setState({isLoading: true})
     const { events, page, range } = this.state
-    const apiResponse = await axios.get(`${REQUEST_API_BASE_URL}?range=${range}&page=${page}`).catch(null)
+    const api = `${REQUEST_API_BASE_URL}?range=${range}&page=${page}`
+    const apiResponse = await axios.get(api).catch(null)
 
     if(!apiResponse || !apiResponse.data || apiResponse.data.status === 500) {
       this.setState({hasMore: false})
