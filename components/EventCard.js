@@ -6,6 +6,10 @@ import Link from 'next/link'
 import HoldingDateTime from '../components/HoldingDateTime'
 import ApplicationAndCapacityCount from '../components/ApplicationAndCapacityCount'
 
+const propTypes = {
+  event: PropTypes.object.isRequired,
+}
+
 export default class EventCard extends Component {
   constructor(props) {
     super(props);
@@ -33,7 +37,7 @@ export default class EventCard extends Component {
               </Card.Text>
               <div>
                 {tags && tags.map((tag) =>
-                  <Badge key={tag.id} pill className="m-r-5 bg--darken_1" style={{color: 'white'}}>{tag.name}</Badge>
+                  <Badge key={tag.id} pill className="mr-5 bg--darken_1" style={{color: 'white'}}>{tag.name}</Badge>
                 )}
               </div>
             </Card.Body>
@@ -44,6 +48,4 @@ export default class EventCard extends Component {
   }
 }
 
-EventCard.propTypes = {
-  event: PropTypes.object.isRequired,
-};
+EventCard.propTypes = propTypes

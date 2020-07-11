@@ -6,6 +6,11 @@ import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
 import moment from 'moment';
 moment.locale("ja");
 
+const propTypes = {
+  startDateTime: PropTypes.string.isRequired,
+  endDateTime: PropTypes.string.isRequired,
+};
+
 export default class HoldingDateTime extends Component {
   constructor(props) {
     super(props);
@@ -44,7 +49,4 @@ export default class HoldingDateTime extends Component {
   }
 }
 
-HoldingDateTime.propTypes = {
-  startDateTime: PropTypes.string.isRequired,
-  endDateTime: PropTypes.string.isRequired,
-};
+HoldingDateTime.propTypes = propTypes

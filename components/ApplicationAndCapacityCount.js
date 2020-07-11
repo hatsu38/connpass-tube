@@ -4,6 +4,10 @@ import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUsers } from '@fortawesome/free-solid-svg-icons'
 
+const propTypes = {
+  event: PropTypes.object.isRequired
+}
+
 export default class ApplicationAndCapacityCount extends Component {
   constructor(props) {
     super(props);
@@ -26,6 +30,4 @@ export default class ApplicationAndCapacityCount extends Component {
   }
 }
 
-ApplicationAndCapacityCount.propTypes = {
-  event: PropTypes.object.isRequired
-};
+ApplicationAndCapacityCount.propTypes = propTypes

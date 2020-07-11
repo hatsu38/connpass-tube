@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 
 import { Nav } from 'react-bootstrap';
 
+const propTypes = {
+  range: PropTypes.string.isRequired
+}
+
 export default class SelectNav extends Component {
   constructor(props) {
     super(props);
@@ -30,6 +34,4 @@ export default class SelectNav extends Component {
   }
 }
 
-SelectNav.propTypes = {
-  range: PropTypes.string.isRequired,
-}
+SelectNav.propTypes = propTypes
