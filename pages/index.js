@@ -10,11 +10,12 @@ export default class Index extends Component {
   }
 
   render() {
-
     return (
       <Layout>
-        <RankingEvent />
-        <TagsRelatedEvents />
+        <div className="top--background">
+          <RankingEvent />
+          <TagsRelatedEvents />
+        </div>
       </Layout>
     )
   }

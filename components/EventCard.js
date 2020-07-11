@@ -37,7 +37,7 @@ export default class EventCard extends Component {
               </Card.Text>
               <div>
                 {tags && tags.map((tag) =>
-                  <Badge key={tag.id} pill className="m-r-5 bg--darken_1" style={{color: 'white'}}>{tag.name}</Badge>
+                  <Badge key={tag.id} pill className="mr-5 bg--darken_1" style={{color: 'white'}}>{tag.name}</Badge>
                 )}
               </div>
             </Card.Body>

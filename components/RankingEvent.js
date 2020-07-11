@@ -88,7 +88,7 @@ export default class RankingEvent extends Component {
       <>
         <Card className="text-center">
           <Card.Body>
-            <Card.Title className="f3 m-b-10">人気ランキング</Card.Title>
+            <Card.Title className="f3 mb-10">人気ランキング</Card.Title>
             <div className="eventCount">
               <strong>{totalEventsCount}</strong>件のイベント
             </div>
@@ -107,9 +107,10 @@ export default class RankingEvent extends Component {
         </Nav>
         {events && events.map((event) => <EventCard event={event} key={event.id} />)}
         {hasMore &&
-          <div className="moreReadButton">
+          <div className="moreReadButton--wrapper mb-40">
             <Button
               block
+              className="moreReadButton"
               variant="outline-secondary"
               disabled={isLoading}
               onClick={isLoading ? null : this.fetchEvents}

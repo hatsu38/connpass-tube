@@ -1,0 +1,31 @@
+$borderColor: #f3f3f3;
+
+.border-bottom{
+  border-bottom: 1px solid $borderColor;
+}
+
+.border-top{
+  border-top: 1px solid $borderColor;
+}
+
+.border-right{
+  border-right: 1px solid $borderColor;
+}
+
+.border-left{
+  border-left: 1px solid $borderColor;
+}
+
+.border-horizontal{
+  border-right: 1px solid $borderColor;
+  border-left: 1px solid $borderColor;
+}
+
+.border-vertical{
+  border-top: 1px solid $borderColor;
+  border-bottom: 1px solid $borderColor;
+}
+
+.border-all{
+  border: 1px solid $borderColor;
+}

@@ -12,16 +12,16 @@ export default class TagsRelatedEvents extends Component {
   }
 
   componentDidMount = () => {
-    this.fetchTagsRelatedEvent
+    this.fetchTagsRelatedEvent()
   }
 
   async fetchTagsRelatedEvent() {
-    const apiResponse = await axios.get(`${REQUEST_API_BASE_URL}?num=${10}`).catch(null)
+    const api = `${REQUEST_API_BASE_URL}?ranking=related&tags_num=10&events_num=5`
+    const apiResponse = await axios.get(api).catch(null)
     if(!apiResponse || !apiResponse.data || apiResponse.data.status === 500) { return true }
 
     const data = apiResponse.data
     const insertTags = this.state.tags.concat(data.tags)
-    console.log("insertTags", insertTags)
     this.setState({tags: insertTags})
   }
 
