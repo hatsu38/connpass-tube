@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+const propTypes = {
+  movie: PropTypes.object.isRequired
+};
+
 export default class YouTube extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +30,5 @@ export default class YouTube extends Component {
   }
 }
 
-YouTube.propTypes = {
-  movie: PropTypes.object.isRequired
-};
 
+YouTube.propTypes = propTypes

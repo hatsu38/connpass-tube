@@ -6,6 +6,10 @@ import Link from 'next/link'
 import HoldingDateTime from '../components/HoldingDateTime'
 import ApplicationAndCapacityCount from '../components/ApplicationAndCapacityCount'
 
+const propTypes = {
+  event: PropTypes.object.isRequired,
+}
+
 export default class EventCard extends Component {
   constructor(props) {
     super(props);
@@ -44,6 +48,4 @@ export default class EventCard extends Component {
   }
 }
 
-EventCard.propTypes = {
-  event: PropTypes.object.isRequired,
-};
+EventCard.propTypes = propTypes

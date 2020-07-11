@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
-
-import Layout from '../components/Layout'
-
 import EventCard from '../components/EventCard'
-
 import { Nav, Card, Button } from 'react-bootstrap';
-
 import axios from 'axios'
-
 const REQUEST_API_BASE_URL = "https://connpass-tube-api.herokuapp.com/api/v1/events"
 
 export default class RankingEvent extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = this.initialState
+    this.fetchEvents = this.fetchEvents.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
+  }
+
+  get initialState() {
+    return {
       events: [],
       range: 'recent',
       totalEventsCount: 0,
@@ -21,18 +21,32 @@ export default class RankingEvent extends Component {
       hasMore: false,
       isLoading: false
     }
-    this.fetchEvents = this.fetchEvents.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.fetchEvents()
   }
 
-  handleSelect = (eventKey) =>  {
-    this.setState({range: eventKey})
-    this.setState({page: 1})
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.range !== prevState.range) {
+      this.fetchEvents()
+    }
+  }
+
+  resetState = () => {
+    this.setState(this.initialState)
+  }
+
+  resetStateExceptRange = () => {
     this.setState({events: []})
-    this.fetchEvents(eventKey)
+    this.setState({page: 1})
+    this.setState({hasMore: false})
+    this.setState({isLoading: false})
+  }
+
+  handleSelect = eventKey =>  {
+    this.resetStateExceptRange()
+    this.setState({range: eventKey})
   }
 
   async fetchEvents() {
@@ -91,11 +105,7 @@ export default class RankingEvent extends Component {
             <Nav.Link eventKey="all">すべて</Nav.Link>
           </Nav.Item>
         </Nav>
-        {events &&
-          events.map((event) =>
-            <EventCard event={event} key={event.id} />
-          )
-        }
+        {events && events.map((event) => <EventCard event={event} key={event.id} />)}
         {hasMore &&
           <div className="moreReadButton">
             <Button
